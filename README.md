@@ -2,7 +2,7 @@
 
 This is a programming challenge for SFL. A client has requested the development of a composer classifier based on live-captured audio that can stream chunks of data to the model at 15, 30, or 60-second intervals, as desired. The input to the model will be MIDI files. The specific task is to binary classifier that identifies whether a streamed MIDI file was composed by any of the following composers: **Bach, Beethoven, Schubert, Brahms** or **not**.
 
-The final report is available as a Jupyter notebook in notebooks/overview.ipynb (see the Notebooks section for a full list of available notebooks).
+The **final report** is available as a Jupyter notebook in `/notebooks/overview.ipynb` or as a PDF in [/notebooks/overview.pdf](/notebooks/overview.pdf)
 
 # Client Spec
 The original client spec is available in `docs/client_spec.txt`
