@@ -24,14 +24,14 @@ class ColoredFormatter(logging.Formatter):
     }
     RESET = "\033[0m"  # Reset color to default
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
         """Apply color to the log level name."""
         log_color = self.COLORS.get(record.levelname, self.RESET)  # Default to no color
         record.levelname = f"{log_color}{record.levelname}{self.RESET}"  # Colorize level name
         return super().format(record)
 
 
-def _classical_composer_logger(name="classical_composer_logger"):
+def _classical_composer_logger(name: str = "classical_composer_logger") -> logging.Logger:
     """Set up a logger with colored output."""
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)  # Set the lowest level to capture all logs
@@ -51,5 +51,5 @@ def _classical_composer_logger(name="classical_composer_logger"):
     return logger
 
 
-print(generate_intro())
+generate_intro()
 logger = _classical_composer_logger()

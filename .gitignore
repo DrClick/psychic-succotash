@@ -1,5 +1,5 @@
 # project specific files
-data/
+/data/
 
 # Python template ----------------------------------------------
 # Byte-compiled / optimized / DLL files

@@ -9,16 +9,22 @@ Includes:
 
 import os
 import shutil
+from typing import cast
 import zipfile
 import pretty_midi
 import pandas as pd
+from tqdm import tqdm
+import numpy as np
+from numpy.typing import NDArray
 
-from sklearn.model_selection import train_test_split
+
+from classical_composer.frames import extract_fixed_frames, extract_random_frames
 
 
 def extract_data(
-    source_data_file="data/Challenge_DataSet.zip", output_folder="data/Challenge_DataSet"
-):
+    source_data_file: str = "data/Challenge_DataSet.zip",
+    output_folder: str = "data/Challenge_DataSet",
+) -> None:
     """Intakes the original training data and extracts it.
 
     Assumes the following structure:
@@ -77,7 +83,7 @@ def extract_data(
             print(f"{subindent}{f}")
 
 
-def create_file_dataframe(data_folder="data/Challenge_DataSet"):
+def create_file_dataframe(data_folder: str = "data/Challenge_DataSet") -> pd.DataFrame:
     """Create a DataFrame containing information about the MIDI files in the dataset.
 
     Args
@@ -108,49 +114,72 @@ def create_file_dataframe(data_folder="data/Challenge_DataSet"):
     return df
 
 
-# def generate_dataset(df, output_folder="data/processed", frame_length_seconds=30, frame_step=100):
-#     pass
-
-
-def stratified_group_split(df, group_col, stratify_col, test_size=0.2, random_state=42):
-    """Split a dataset into train and test sets.
-
-    Ensuring all rows with the same group_col value are in one set or the other, stratified by
-    stratify_col.
+def generate_dataset(
+    df: pd.DataFrame,
+    output_folder: str = "data/processed",
+    frame_length_seconds: int = 30,
+    sample_freq: int = 100,
+) -> pd.DataFrame:
+    """Generate a dataset from a DataFrame of MIDI files.
 
     Args
     ----
-        df: DataFrame containing the dataset.
-        group_col: Column name that identifies groups (e.g., file_idx).
-        stratify_col: Column name for stratification (e.g., composer).
-        test_size: Proportion of the dataset to include in the test split.
-        random_state: Random seed for reproducibility.
+        df: DataFrame containing information about the MIDI files.
+        output_folder: Folder to save the processed data.
+        frame_length_seconds: Duration of each frame in seconds.
+        sample_freq: The length of each sample from the piano roll (1/n seconds).
 
     Returns
     -------
-        train_df: Training subset of the DataFrame.
-        test_df: Testing subset of the DataFrame.
+        dataset: DataFrame containing the processed data.
+
     """
-    # Group by `group_col` and retain a single representative row for each group
-    group_df = df.groupby(group_col).first().reset_index()
+    # Create the output folder if it doesn't exist
+    os.makedirs(output_folder, exist_ok=True)
 
-    # Perform stratified split on the grouped data
-    train_groups, test_groups = train_test_split(
-        group_df[group_col],  # Split by group_col values
-        test_size=test_size,
-        random_state=random_state,
-        stratify=group_df[stratify_col],  # Stratify by the stratify_col
-    )
+    # Initialize an empty list to store the dataset
+    dataset = []
 
-    # Map the split back to the original dataset
-    train_df = df[df[group_col].isin(train_groups)]
-    test_df = df[df[group_col].isin(test_groups)]
+    for file_index, row in tqdm(df.iterrows(), desc="Processing MIDI files", total=len(df)):
+        # Load the MIDI file
+        midi_data = pretty_midi.PrettyMIDI(row["filepath"])
 
-    return train_df, test_df
+        # Extract the piano roll
+        piano_roll = midi_data.get_piano_roll(fs=sample_freq)
+
+        # Extract fixed frames from the beginning and end of the piano roll
+        frame_size = frame_length_seconds * sample_freq
+        fixed_frames = extract_fixed_frames(piano_roll.shape, frame_size=frame_size)
+
+        # Extract random frames from the piano roll
+        random_frames = extract_random_frames(
+            piano_roll.shape,
+            n_frames=20,
+            frame_size=frame_size,
+            buffer_size=5,
+            random_seed=42,
+        )
+
+        # Extract features from each frame
+        for start, end in fixed_frames + random_frames:
+            # Append the features to the dataset
+            dataset.append(
+                {
+                    "file_index": file_index,
+                    "composer": row["composer"],
+                    "dataset": row["dataset"],
+                    "frame_start": start,
+                    "frame_end": end,
+                }
+            )
+
+    # Convert the dataset to a DataFrame
+    dataset = pd.DataFrame(dataset)
+
+    return dataset
 
 
-# Function to generate piano roll
-def generate_piano_roll(file_path, fs=100):
+def generate_piano_roll(file_path: str, fs: int = 100) -> NDArray[np.float64]:
     """Generate a piano roll from a MIDI file.
 
     Args
@@ -166,4 +195,4 @@ def generate_piano_roll(file_path, fs=100):
     """
     midi_data = pretty_midi.PrettyMIDI(file_path)
     piano_roll = midi_data.get_piano_roll(fs=fs)
-    return piano_roll
+    return cast(NDArray[np.float64], piano_roll)

@@ -7,10 +7,14 @@ repos:
     rev: v1.14.1
     hooks:
       - id: mypy
+        files: src
+        additional_dependencies:
+          - tomli
   - repo: https://github.com/PyCQA/pydocstyle
     rev: 6.3.0
     hooks:
       - id: pydocstyle
+        files: src
         additional_dependencies:
             - tomli
 
@@ -18,6 +22,4 @@ repos:
     rev: 7.1.1
     hooks:
       - id: flake8
-        args: ["--max-line-length=100", "--docstring-convention=numpy"]
-        additional_dependencies:
-          - flake8-docstrings
+        args: ["--max-line-length=100"]

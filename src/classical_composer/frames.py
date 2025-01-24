@@ -6,10 +6,11 @@ Includes:
 - Extracting random frames from a piano roll excluding the fixed frames.
 """
 
+from typing import List, Tuple
 import numpy as np
 
 
-def extract_fixed_frames(piano_roll_shape, frame_size):
+def extract_fixed_frames(piano_roll_shape: Tuple[int, int], frame_size: int) -> list:
     """Extract fixed frames indicies from the beginning and end of a piano roll.
 
     Args
@@ -38,7 +39,13 @@ def extract_fixed_frames(piano_roll_shape, frame_size):
 
 
 # Function to extract random frames excluding the fixed ones
-def extract_random_frames(piano_roll_shape, n_frames, frame_size, buffer_size=5, random_seed=42):
+def extract_random_frames(
+    piano_roll_shape: Tuple[int, int],
+    n_frames: int,
+    frame_size: int,
+    buffer_size: int = 5,
+    random_seed: int = 42,
+) -> List[Tuple[int, int]]:
     """Extract random frames from a piano roll.
 
     Uses buffer_size to exclude frames from starting at the the start and end of the piano roll.

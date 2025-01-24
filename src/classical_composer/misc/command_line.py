@@ -8,7 +8,7 @@ Includes:
 import pyfiglet
 
 
-def generate_intro():
+def generate_intro() -> None:
     """Generate an ASCII art intro for the CLI."""
     # Create large ASCII art for "classical_composer"
     large_text = pyfiglet.figlet_format("SFL - Deloitte")
