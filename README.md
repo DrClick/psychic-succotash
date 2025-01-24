@@ -1,57 +1,71 @@
 # ClassicalComposer
 
-This is a programming challenge for SFL. A client has requested us to build a composer classifier based on live captured audio that can be set to stream chunks of data to our model at 15, 30, 60-second intervals, as desired. The input to the model will be midi files. The specific request is to identify if a streamed midi file is composed by any of (Bach, Beethoven, Schubert, and Brahms) or by anyone else. 
+This is a programming challenge for SFL. A client has requested the development of a composer classifier based on live-captured audio that can stream chunks of data to the model at 15, 30, or 60-second intervals, as desired. The input to the model will be MIDI files. The specific task is to binary classifier that identifies whether a streamed MIDI file was composed by any of the following composers: **Bach, Beethoven, Schubert, Brahms** or **not**.
 
-The final report is a jupyter notebook available in notebooks/overview.ipynb (see the notebooks section for a list of all available notebooks)
+The final report is available as a Jupyter notebook in notebooks/overview.ipynb (see the Notebooks section for a full list of available notebooks).
 
 # Client Spec
-The original client spec is available in docs/client_spec.txt
+The original client spec is available in `docs/client_spec.txt`
 
-# Building
-This container can take some time to build, it is assumed you are using VSCode and devcontainers. 
-Can be built manually with 
-```
+
+# Development Setup
+
+### Building
+This container may take some time to build. It is assumed you are using **VS Code** and **Dev Containers**. You can also build it manually with the following command:
+```bash
 docker compose --project-name classicalcomposer -f <PATH_TO_CODE>\docker-compose.yml -f <PATH_TO_CODE>\.devcontainer\docker-compose.yml -f <PATH_TO_TO_LOG> build
 ```
 
-# Setup
+### Python Environment and Dependency Management 
+This project uses **Hatch** to manage the Python environment and dependencies. For more information, see the [hatch basic usage](https://hatch.pypa.io/latest/tutorials/environment/basic-usage/).
 
-This project uses hatch to mange the python env and dependencies [hatch basic usage](https://hatch.pypa.io/latest/tutorials/environment/basic-usage/)
+Run the following command to execute the main program:
 
-```hatch run python main.py```
-
-You will need to confirgure your git credentials on the host system if using dev-containers
-set python interpreter to this path
+```bash
+hatch run python main.py```
 ```
+
+In order to set the python interpreter path in VSCode use the following:
+```bash
 hatch env create
 hatch env find
 ```
 
-Be sure to rebuild the dev containers after updating .env variables or dependencies or strange errors can occur.
-# Scripts
+### Configuration Management
+This project uses **dyanconf** for configuration management.Please see this link for a  [quick start](https://www.dynaconf.com/)
+
+### Scripts
 
 | Script Name                               | Description                               |
 |-------------------------------------------|-------------------------------------------|
-| `hatch run python scripts/generate_dataset.py`    | creates the dataset files |
+| `hatch run python scripts/generate_dataset.py`    | Generates the dataset files |
 | `hatch run python scripts/train.py`    | trains the models |
-| `hatch run python scripts/eval.py`    | evaluate a model |
+| `hatch run python scripts/eval.py`    | evaluate a midi file |
 
 
 
 # Notebooks
-To launch jupyter, run ```hatch run jupyter lab```
+To launch Jupyter Lab, run 
+```bash
+hatch run jupyter:lab
+```
 | Notebook Name                               | Description                               |
 |-------------------------------------------|-------------------------------------------|
-| `python notebooks/overview.ipynb`    | Default |
+| `/notebooks/overview.ipynb`    | Overview of the project adn recommendations for next steps |
+| `/notebooks/eda.ipynb`    | Original EDA/modeling for the project and initial research |
+| `/notebooks/cnn.ipynb`    | Experimental CNN modeling for the project |
 
 
 # Usage
 
-This project ships with trained models, you can either use those or use the code to train a new model. See the scripts section for usage on retraining.
-To use the pipeline 
+This project ships with trained models. You can either use these pre-trained models or train new ones using the provided code (see the Scripts section for details on retraining).
 
-`docker commands here `
+### Running the Pipeline
+To use the pipeline, run the following Docker commands:
 
-or as a web front end
+`<Insert relevant Docker commands>`
 
-`docker commands here `
+### Web Front-End
+To use the web front-end, run:
+
+`<Insert relevant Docker commands>`
