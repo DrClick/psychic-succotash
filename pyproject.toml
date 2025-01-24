@@ -10,24 +10,17 @@ authors = [
 ]
 dynamic = ["version"]
 
-[project.optional-dependencies]
-dev = [
-    "black>=23.0",
-    "mypy>=1.2.0",
-    "pytest>=7.0",
-    "pre-commit>=3.0.0"
-]
-
+[tool.isort]
+profile = "black"
 
 [tool.black]
-line-length = 88  # Optional: Adjust line length (default: 88)
-target-version = ["py39"]  # Adjust for your Python version
+line-length = 100
+target-version = ["py39"]
 exclude = '''
 /(
     \.git
   | \.tox
   | _build
-  | buck-out
   | build
   | dist
 )/
@@ -49,6 +42,26 @@ addopts = "--strict-markers"  # Additional pytest options
 [tool.hatch.version]
 path = "src/classical_composer/__about__.py"
 
+[project.optional-dependencies]
+dev = [
+    "black>=23.0",
+    "isort",
+    "mypy>=1.2.0",
+    "flake8>=6.0.0",
+    "pytest>=7.0",
+    "pytest-cov>=4.0.0",
+    "pre-commit>=3.0.0",
+    "pydocstyle",
+    "flake8-docstrings",
+    "tomli",
+]
+
+[tool.pydocstyle]
+convention = "numpy"
+add-ignore = ["D202", "D203", "D100"]
+match = "(?!__about__|__init__\\.py$).*\\.py"
+match-dir = "^(?!scripts|tests).*$"
+
 [tool.hatch.envs.default]
 dependencies = [
   "pyindex",
@@ -69,6 +82,7 @@ dependencies = [
   #-----------------
   "pyfiglet"
 ]
+features = ["dev"]
 
 [tool.hatch.envs.jupyter]
 dependencies = [
@@ -92,4 +106,5 @@ dependencies = [
   "jupyterlab"
 ]
 scripts = { "lab" = "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root" }
+
 

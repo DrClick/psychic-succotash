@@ -1,12 +1,11 @@
 # ClassicalComposer
 
-This is a programming challenge for SFL. A client has requested the development of a composer classifier based on live-captured audio that can stream chunks of data to the model at 15, 30, or 60-second intervals, as desired. The input to the model will be MIDI files. The specific task is to binary classifier that identifies whether a streamed MIDI file was composed by any of the following composers: **Bach, Beethoven, Schubert, Brahms** or **not**.
+This is a programming challenge for SFL. A client has requested the development of a composer classifier based on live-captured audio that can stream chunks of data to the model at 15, 30, or 60-second intervals, as desired. The input to the model will be MIDI files. The specific task is to create a binary classifier that identifies whether a streamed MIDI file was composed by any of the following composers: **Bach, Beethoven, Schubert, Brahms** or **not**.
 
-The **final report** is available as a Jupyter notebook in `/notebooks/overview.ipynb` or as a PDF in [/notebooks/overview.pdf](/notebooks/overview.pdf)
+The **initial assessment** is available as a Jupyter notebook in [/notebooks/overview.ipynb](/notebooks/overview.ipynb) or as a PDF in [/notebooks/overview.pdf](/notebooks/overview.pdf).
 
 # Client Spec
-The original client spec is available in `docs/client_spec.txt`
-
+The original client spec is available in `docs/client_spec.txt`.
 
 # Development Setup
 
@@ -30,6 +29,23 @@ In order to set the python interpreter path in VSCode use the following:
 hatch env create
 hatch env find
 ```
+
+For manually running development tools
+|tool |command|
+|-----|-------|
+|Unit testing| `hatch run pytest`|
+|Code formatting| `hatch run black .`|
+|Linting| `hatch run flake8`|
+|imports sorting|`hatch run isort .`|
+|type checking|`hatch run mypy src`|
+|docstring checking|`pydocstyle src/`|
+
+
+These should all be done on the pre-commit hooks, to install these
+```bash
+hatch run pre-commit install
+```
+
 
 ### Configuration Management
 This project uses **dyanconf** for configuration management.Please see this link for a  [quick start](https://www.dynaconf.com/)

@@ -1,12 +1,23 @@
+"""
+Provides functionality for unified logging.
+
+Includes:
+- logger - the default logger to use in the project
+
+"""
+
 import logging
+
 from classical_composer.misc.command_line import generate_intro
+
 
 class ColoredFormatter(logging.Formatter):
     """Custom formatter for colored log levels."""
+
     # ANSI escape codes for colors
     COLORS = {
         "DEBUG": "\033[0;34m",  # Blue
-        "INFO": "\033[0;32m",   # Green
+        "INFO": "\033[0;32m",  # Green
         "WARNING": "\033[0;33m",  # Yellow
         "ERROR": "\033[0;31m",  # Red
         "CRITICAL": "\033[1;41m",  # White on Red background
@@ -39,5 +50,6 @@ def _classical_composer_logger(name="classical_composer_logger"):
 
     return logger
 
+
 print(generate_intro())
-logger  = _classical_composer_logger()
+logger = _classical_composer_logger()

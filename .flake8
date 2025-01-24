@@ -1,0 +1,5 @@
+[flake8]
+max-line-length = 100
+docstring-convention = numpy
+ignore = E402,D100,D104
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,venv,.venv,.tox,.eggs,*.egg-info
