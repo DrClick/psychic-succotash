@@ -1,0 +1,4 @@
+[default]
+log_level = "INFO"
+source_data_file = "/workspaces/ClassicalComposer/data/Challenge_DataSet.zip"
+data_folder = "/workspaces/ClassicalComposer/data/Challenge_DataSet"

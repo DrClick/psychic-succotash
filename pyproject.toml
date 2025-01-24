@@ -1,0 +1,95 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "classical_composer"
+description = "A POC system for classical composer classification"
+authors = [
+    { name="Thomas Watson", email="drclick@mac.com" }
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+    "black>=23.0",
+    "mypy>=1.2.0",
+    "pytest>=7.0",
+    "pre-commit>=3.0.0"
+]
+
+
+[tool.black]
+line-length = 88  # Optional: Adjust line length (default: 88)
+target-version = ["py39"]  # Adjust for your Python version
+exclude = '''
+/(
+    \.git
+  | \.tox
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+
+[tool.mypy]
+python_version = "3.9"  # Curent Python version
+check_untyped_defs = true  # Warn if functions lack type hints
+disallow_untyped_calls = false  # Allow calls to untyped functions
+strict_optional = true  # Enable strict handling of optional types
+ignore_missing_imports = true  # Avoid errors for untyped libraries
+
+[tool.pytest.ini_options]
+minversion = "6.0"  # Minimum version of pytest
+testpaths = ["tests"]  # Directory where tests are located
+addopts = "--strict-markers"  # Additional pytest options
+
+[tool.hatch.version]
+path = "src/classical_composer/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pyindex",
+  "tensorflow[and-cuda]",
+  "dynaconf",
+  "tqdm",
+  "joblib",
+  "pandas",
+  "numpy",
+  "requests",
+  "websockets",
+  "wandb",
+  "matplotlib",
+  "pretty_midi",
+  "mir_eval",
+  "seaborn",
+  "scikit-learn",
+  #-----------------
+  "pyfiglet"
+]
+
+[tool.hatch.envs.jupyter]
+dependencies = [
+  "pyindex",
+  "tensorflow[and-cuda]",
+  "dynaconf",
+  "tqdm",
+  "joblib",
+  "pandas",
+  "numpy",
+  "requests",
+  "websockets",
+  "pyfiglet",
+  "wandb",
+  "matplotlib",
+  "pretty_midi",
+  "mir_eval",
+  "seaborn",
+  "scikit-learn",
+  #-----------------
+  "jupyterlab"
+]
+scripts = { "lab" = "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root" }
+

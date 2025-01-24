@@ -1,0 +1,6 @@
+__title__ = "SFL Classical Composer Pipeline"
+__version__ = "0.1.0"
+__description__ = "Classical Compser Analizer: Deloitte"
+__author__ = "Thomas Watson"
+__email__ = "drclick@mac.com"
+__license__ = "Deloitte"
