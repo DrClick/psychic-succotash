@@ -18,6 +18,9 @@ class App:
         """Run the classical composer pipeline."""
         logger.info("Running classical composer pipeline")
 
+        print("\n\n\n\nPlease run > hatch run python scripts/generate_dataset.py")
+        print("then > hatch run python scripts/train_kmeans.py")
+
 
 def create_app():
     """Create the app."""
