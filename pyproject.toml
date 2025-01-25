@@ -85,8 +85,6 @@ dependencies = [
   "mir_eval",
   "seaborn",
   "scikit-learn",
-  #-----------------
-  "pyfiglet"
 ]
 features = ["dev"]
 

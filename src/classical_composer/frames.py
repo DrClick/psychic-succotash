@@ -10,8 +10,8 @@ from typing import List, Tuple
 import numpy as np
 
 
-def extract_fixed_frames(piano_roll_shape: Tuple[int, int], frame_size: int) -> list:
-    """Extract fixed frames indicies from the beginning and end of a piano roll.
+def get_fixed_frame_indicies(piano_roll_shape: Tuple[int, int], frame_size: int) -> list:
+    """Generate fixed frames indicies from the beginning and end of a piano roll.
 
     Args
     ----
@@ -38,8 +38,7 @@ def extract_fixed_frames(piano_roll_shape: Tuple[int, int], frame_size: int) -> 
     return frames
 
 
-# Function to extract random frames excluding the fixed ones
-def extract_random_frames(
+def generate_random_frame_indicies(
     piano_roll_shape: Tuple[int, int],
     n_frames: int,
     frame_size: int,
@@ -74,4 +73,23 @@ def extract_random_frames(
     np.random.seed(random_seed)
     random_starts = np.random.choice(index_range, size=n_frames, replace=False)
     frames = [(start, start + frame_size) for start in random_starts]
+    return frames
+
+
+def extract_frames(
+    piano_roll: np.ndarray, frame_indicies: List[Tuple[int, int]]
+) -> List[np.ndarray]:
+    """Extract frames from a piano roll using the provided indicies.
+
+    Args
+    ----
+        piano_roll: np.ndarray, piano roll to extract frames from.
+        frame_indicies: list of lists, each containing the start and end indices of a frame.
+
+    Returns
+    -------
+        frames: list of np.ndarrays, extracted frames.
+
+    """
+    frames = [piano_roll[:, start:end] for start, end in frame_indicies]
     return frames

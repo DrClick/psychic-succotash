@@ -9,7 +9,8 @@ Includes:
 
 import os
 import shutil
-from typing import cast
+from typing import List, cast
+import warnings
 import zipfile
 import pretty_midi
 import pandas as pd
@@ -18,7 +19,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 
-from classical_composer.frames import extract_fixed_frames, extract_random_frames
+from classical_composer.frames import get_fixed_frame_indicies, generate_random_frame_indicies
 
 
 def extract_data(
@@ -149,10 +150,10 @@ def generate_dataset(
 
         # Extract fixed frames from the beginning and end of the piano roll
         frame_size = frame_length_seconds * sample_freq
-        fixed_frames = extract_fixed_frames(piano_roll.shape, frame_size=frame_size)
+        fixed_frames = get_fixed_frame_indicies(piano_roll.shape, frame_size=frame_size)
 
         # Extract random frames from the piano roll
-        random_frames = extract_random_frames(
+        random_frames = generate_random_frame_indicies(
             piano_roll.shape,
             n_frames=20,
             frame_size=frame_size,
@@ -166,10 +167,12 @@ def generate_dataset(
             dataset.append(
                 {
                     "file_index": file_index,
+                    "file_path": row["filepath"],
                     "composer": row["composer"],
                     "dataset": row["dataset"],
                     "frame_start": start,
                     "frame_end": end,
+                    "frame_id": f"{file_index}_{start}_{end}",
                 }
             )
 
@@ -193,6 +196,26 @@ def generate_piano_roll(file_path: str, fs: int = 100) -> NDArray[np.float64]:
         (total time of file in seconds/fs)).
 
     """
-    midi_data = pretty_midi.PrettyMIDI(file_path)
-    piano_roll = midi_data.get_piano_roll(fs=fs)
+    with warnings.catch_warnings():
+        # this can be a bit noisy, ignore warnings for now
+        warnings.simplefilter("ignore")  # Ignore all warnings
+        midi_data = pretty_midi.PrettyMIDI(file_path)
+        piano_roll = midi_data.get_piano_roll(fs=fs)
+
     return cast(NDArray[np.float64], piano_roll)
+
+
+def save_frames_to_disk(output_folder: str, frame_idx: List[str], frames: List[np.ndarray]) -> None:
+    """Save a list of piano roll frames to disk.
+
+    Args
+    ----
+        output_folder: str, path to the output folder.
+        frame_idx: list of str, frame identifiers.
+        frames: list of np.ndarray, piano roll frames.
+
+    """
+    frames_folder = f"{output_folder}/frames"
+    os.makedirs(frames_folder, exist_ok=True)
+    for idx, frame in zip(frame_idx, frames):
+        np.save(os.path.join(frames_folder, f"{idx}.npy"), frame)
