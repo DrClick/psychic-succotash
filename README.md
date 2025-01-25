@@ -8,6 +8,11 @@ The **initial assessment** is available below in the **Project Analysis** sectio
 The original client spec is available in `docs/client_spec.txt`.
 
 ## Development Setup
+You will need the **Challenge_DataSet.zip** file in order to run the pipline. Open settings.toml and set the `source_data_file` location and the `data_folder` path to an accessible location for this container. Additionally if you plan to train the CNN on an NVIDIA GPU you will need to set up the .env file
+Copy the `.env.example` file to `.env` and update the placeholder values with your actual configuration:
+```bash
+cp .env.example .env
+```
 
 ### Building
 This container may take some time to build. It is assumed you are using **VS Code** and **Dev Containers**. You can also build it manually with the following command:
@@ -51,7 +56,7 @@ hatch run pre-commit install
 This project uses **dyanconf** for configuration management.Please see this link for a  [quick start](https://www.dynaconf.com/)
 
 ### Scripts
-Please run the scripts in the following order
+Please run the scripts in the following order.
 
 | Script Name                               | Description                               |
 |-------------------------------------------|-------------------------------------------|
