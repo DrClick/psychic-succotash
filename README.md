@@ -154,7 +154,7 @@ Initial modeling used **K-means clustering** and **Gaussian Mixture Models (GMM)
 |![Frame Extraction](resources/frame_extraction.png "Frame Extraction")|![Class Distribution](resources/class_distribution.png "Class Distribution")|
 
 - **Feature Selection**:
-  - Features such as **pitch entropy**, **dominant pitch**, **average velocity**, and **spectral bandwidth** were extracted and visually analyzed Kernel Density Estimation per composer.
+  - Features such as **pitch entropy**, **dominant pitch**, **average velocity**, and **spectral bandwidth** were extracted and visually analyzed with Kernel Density Estimation per composer.
   - Analytical feature selection will be essential for future iterations.
 
 - **Clustering Results**:
