@@ -138,7 +138,7 @@ The task involves 1-vs-All classification from 30-second MIDI clips. Assumptions
 ---
 
 ### Exploratory Data Analysis (EDA) and Initial Modeling
-Initial modeling used **K-means clustering** and **Gaussian Mixture Models (GMM)**, both with and without kernel tricks. Key steps:
+Initial modeling used **K-means clustering** and **Gaussian Mixture Models (GMM)** with and without kernel tricks. Key steps:
 
 - **Dataset Splits**:
   - The training set was split into training and validation sets, stratified by composition and grouped by file to prevent overlap.
@@ -149,7 +149,7 @@ Initial modeling used **K-means clustering** and **Gaussian Mixture Models (GMM)
 |![Frame Extraction](resources/frame_extraction.png "Frame Extraction")|![Class Distribution](resources/class_distribution.png "Class Distribution")|
 
 - **Feature Selection**:
-  - Features such as **pitch entropy**, **dominant pitch**, **average velocity**, and **spectral bandwidth** were extracted and visually analyzed.
+  - Features such as **pitch entropy**, **dominant pitch**, **average velocity**, and **spectral bandwidth** were extracted and visually analyzed Kernel Density Estimation per composer.
   - Analytical feature selection will be essential for future iterations.
 
 - **Clustering Results**:
