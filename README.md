@@ -38,7 +38,7 @@ For manually running development tools
 |Linting| `hatch run flake8`|
 |imports sorting|`hatch run isort .`|
 |type checking|`hatch run mypy src`|
-|docstring checking|`pydocstyle src/`|
+|docstring checking|`hatch run pydocstyle src`|
 
 
 These should all be done on the pre-commit hooks, to install these

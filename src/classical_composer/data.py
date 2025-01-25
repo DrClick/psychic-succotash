@@ -9,7 +9,7 @@ Includes:
 
 import os
 import shutil
-from typing import List, cast
+from typing import List, Tuple, cast
 import warnings
 import zipfile
 import pretty_midi
@@ -17,6 +17,7 @@ import pandas as pd
 from tqdm import tqdm
 import numpy as np
 from numpy.typing import NDArray
+from sklearn.model_selection import train_test_split
 
 
 from classical_composer.frames import get_fixed_frame_indicies, generate_random_frame_indicies
@@ -219,3 +220,46 @@ def save_frames_to_disk(output_folder: str, frame_idx: List[str], frames: List[n
     os.makedirs(frames_folder, exist_ok=True)
     for idx, frame in zip(frame_idx, frames):
         np.save(os.path.join(frames_folder, f"{idx}.npy"), frame)
+
+
+def stratified_group_split(
+    df: pd.DataFrame,
+    group_col: str,
+    stratify_col: str,
+    test_size: float = 0.2,
+    random_state: int = 42,
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """Split a dataset into train and test sets.
+
+    Ensuring all rows with the same group_col value are in one set or the other,
+    stratified by stratify_col.
+
+    Args
+    ----
+        df: DataFrame containing the dataset.
+        group_col: Column name that identifies groups (e.g., file_idx).
+        stratify_col: Column name for stratification (e.g., composer).
+        test_size: Proportion of the dataset to include in the test split.
+        random_state: Random seed for reproducibility.
+
+    Returns
+    -------
+        train_df: Training subset of the DataFrame.
+        test_df: Testing subset of the DataFrame.
+    """
+    # Group by `group_col` and retain a single representative row for each group
+    group_df = df.groupby(group_col).first().reset_index()
+
+    # Perform stratified split on the grouped data
+    train_groups, test_groups = train_test_split(
+        group_df[group_col],  # Split by group_col values
+        test_size=test_size,
+        random_state=random_state,
+        stratify=group_df[stratify_col],  # Stratify by the stratify_col
+    )
+
+    # Map the split back to the original dataset
+    train_df = df[df[group_col].isin(train_groups)]
+    test_df = df[df[group_col].isin(test_groups)]
+
+    return train_df, test_df
