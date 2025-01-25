@@ -172,7 +172,7 @@ These results are promising, suggesting that CNNs are the most viable path forwa
 
 
 # Development Setup
-You will need the **Challenge_DataSet.zip** file in order to run the pipline. Open settings.toml and set the `source_data_file` location and the `data_folder` path to an accessible location for this container. Additionally if you plan to train the CNN on an NVIDIA GPU you will need to set up the .env file
+You will need the **Challenge_DataSet.zip** file in order to run the pipeline. Open settings.toml and set the `source_data_file` location and the `data_folder` path to an accessible location for this container. Additionally if you plan to train the CNN on an NVIDIA GPU you will need to set up the .env file
 Copy the `.env.example` file to `.env` and update the placeholder values with your actual configuration:
 ```bash
 cp .env.example .env
