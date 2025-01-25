@@ -6,6 +6,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 # ------------------------------------------------------------
 import json
+import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
@@ -15,6 +16,15 @@ from classical_composer.data import (
     generate_dataset,
     generate_piano_roll,
     save_frames_to_disk,
+)
+from classical_composer.features.feature_extractor import FeatureExtractor
+from classical_composer.features import (
+    frequency_based_features,
+    harmonic_features,
+    higher_level_features,
+    pitch_based_features,
+    temporal_features,
+    velocity_based_features,
 )
 from classical_composer.misc.logging import logger
 from classical_composer.frames import extract_frames
@@ -128,3 +138,47 @@ else:
 
 # ------------------------------------------------------------
 # 5) Extract features from each frame
+if not status["extract_features"]:
+    logger.info("Step 5) Extracting features from each frame")
+    # Load the dataset
+    dataset = pd.read_csv(os.path.join(settings.data_folder, "dataset.csv"))
+    features_dataset = dataset.copy()
+
+    # Create the featureExtractor object
+    # Register the feature functions
+    feature_functions = [
+        pitch_based_features,
+        velocity_based_features,
+        temporal_features,
+        harmonic_features,
+        frequency_based_features,
+        higher_level_features,
+    ]
+    featureExtractor = FeatureExtractor(feature_functions)
+
+    # Apply the feature extraction to the dataset
+    # Define a function to extract features for each row in the dataset
+    def _extract_features_for_row(frame_id):
+        frame_path = os.path.join(settings.data_folder, f"frames/{frame_id}.npy")
+        frame = np.load(frame_path)
+        result = featureExtractor.extract_all_features(frame)
+        result["frame_id"] = frame_id
+        return result
+
+    # Apply and expand the features
+    features_df = pd.DataFrame.from_records(
+        features_dataset["frame_id"].apply(_extract_features_for_row)
+    )
+
+    # Concatenate the original dataset with the new features
+    features_dataset = pd.concat([features_dataset, features_df.drop(columns=["frame_id"])], axis=1)
+
+    # Save the dataset with features to disk
+    features_dataset.to_csv(os.path.join(settings.data_folder, "features_dataset.csv"), index=False)
+
+    status["extract_features"] = True
+    save_status(status)
+else:
+    logger.info("Step 5) Features have already been extracted, skipping this step")
+
+logger.info("Pipeline complete")
