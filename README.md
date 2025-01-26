@@ -130,10 +130,10 @@ Input: (128, 3000, 1)
 #### Results
 | Metric               | training    | validation |
 |----------------------|-------------|------------|
-| Training Accuracy    | 0.9770   | 0.7176|
-| Training Loss        | 0.4427   | 1.9245|
-| Training Precision   | 0.9788   | 0.7246|
-| Training Recall      | 0.9749   | 0.6965|
+| Accuracy    | 0.9770   | 0.7176|
+| Loss        | 0.4427   | 1.9245|
+| Precision   | 0.9788   | 0.7246|
+| Recall      | 0.9749   | 0.6965|
 
 | **Training History** | **AUROC Curve** |
 |----------------------|-----------------|
