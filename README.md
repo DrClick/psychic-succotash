@@ -1,6 +1,6 @@
 # ClassicalComposer
 
-This is a programming challenge for SFL. A client has requested the development of a composer classifier based on live-captured audio that can stream chunks of data to the model at 15, 30, or 60-second intervals, as desired. The input to the model will be MIDI files. The specific task is to create a binary classifier that identifies whether a streamed MIDI file was composed by any of the following composers: **Bach, Beethoven, Schubert, Brahms** or **not**.The original client spec is available in `docs/client_spec.txt`.
+This is a programming challenge for SFL. A client has requested the development of a composer classifier based on live-captured audio that can stream chunks of data to the model at 15, 30, or 60-second intervals, as desired. The input to the model will be MIDI files. The specific task is to create a binary classifier that identifies whether a streamed MIDI file was composed by any of the following composers: **Bach, Beethoven, Schubert, Brahms** or **not**. The original client spec is available in `docs/client_spec.txt`.
 
 # Project Analysis Composer Classification
 
@@ -12,7 +12,7 @@ MIDI files are unique as they do not directly store audio recordings. Instead, t
 
 Each MIDI file can be represented as a **Piano Roll**, which flattens all instruments into a unified score, as if the entire orchestration is played on a single piano. While this representation trades off fidelity, it is well-suited for ML applications. A Piano Roll is visualized as a 128px x N image, where N is the length of the piece sampled at a frequency \( f_s \). Below are example Piano Rolls:
 
-| **Bach** | **Holst** |
+| **Bach - Third Cello Suite (known example)** | **Holst - Mars , The Bringer of War (unknown example)** |
 |----------|-----------|
 |![Example Piano Roll](resources/piano_roll.png "Bach's 3rd Cello Suite")|![Mars Piano Roll](resources/mars.png "Holst - Mars")|
 
@@ -49,7 +49,7 @@ The task involves 1-vs-All classification from 30-second MIDI clips. Assumptions
 Initial modeling used **K-means clustering** and **Gaussian Mixture Models (GMM)** with and without kernel tricks. Key steps:
 
 - **Dataset Splits**:
-  - The training set was split into training and validation sets, stratified by composition and grouped by file to prevent overlap.
+  - The training set was split into training and validation sets, stratified by composer and grouped by file to prevent overlap.
   - Each composition was divided into 20 randomly sampled 30-second slices, ensuring inclusion of the first and last 30 seconds.
 
 | **Frame Extraction Visualization** | **Class Distribution** |
