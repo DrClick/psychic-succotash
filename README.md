@@ -128,7 +128,7 @@ Input: (128, 3000, 1)
   - Dropout (to improve generalization).
 
 #### Results
-| Metric               | training    | validation |
+| **Metric**               | **Training**    | **Validation** |
 |----------------------|-------------|------------|
 | Accuracy    | 0.9770   | 0.7176|
 | Loss        | 0.4427   | 1.9245|
