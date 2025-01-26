@@ -128,16 +128,12 @@ Input: (128, 3000, 1)
   - Dropout (to improve generalization).
 
 #### Results
-| Metric               | Value    |
-|----------------------|----------|
-| Training Accuracy    | 0.9770   |
-| Training Loss        | 0.4427   |
-| Training Precision   | 0.9788   |
-| Training Recall      | 0.9749   |
-| Validation Accuracy  | 0.7176   |
-| Validation Loss      | 1.9245   |
-| Validation Precision | 0.7246   |
-| Validation Recall    | 0.6965   |
+| Metric               | training    | validation |
+|----------------------|-------------|------------|
+| Training Accuracy    | 0.9770   | 0.7176|
+| Training Loss        | 0.4427   | 1.9245|
+| Training Precision   | 0.9788   | 0.7246|
+| Training Recall      | 0.9749   | 0.6965|
 
 | **Training History** | **AUROC Curve** |
 |----------------------|-----------------|
