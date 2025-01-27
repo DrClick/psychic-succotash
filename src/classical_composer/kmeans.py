@@ -277,4 +277,4 @@ def evaluate_and_test_kmeans(
         kmeans, X_test, test_predictions, title="Test Set Clustering", pca=pca_model, to_disk=True
     )
 
-    return kmeans, cluster_mapping, validation_df, test_df, threshold
+    return kmeans, scaler, cluster_mapping, validation_df, test_df, threshold

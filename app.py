@@ -22,7 +22,7 @@ class App:
 
         if settings.get("start_server", False):
             logger.info("Starting server")
-            subprocess.run(["hatch", "run", "python", "src/classical_composer/api/server.py"])
+            subprocess.run(["hatch", "run", "python", "scripts/start_server.py"])
         elif settings.get("generate_dataset", False):
             logger.info("Generating dataset")
             subprocess.run(["hatch", "run", "python", "scripts/generate_dataset.py"])

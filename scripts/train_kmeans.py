@@ -76,7 +76,7 @@ else:
     threshold = None  # Will use the default method for mean distance times 1.5
 
     logger.info("Training the KMeans model...")
-    kmeans_model, cluster_mapping, validation_results, test_results, threshold_used = (
+    kmeans_model, scaler, cluster_mapping, validation_results, test_results, threshold_used = (
         evaluate_and_test_kmeans(train_df, validation_df, test_df, features, n_clusters, threshold)
     )
 
@@ -91,6 +91,7 @@ else:
     model_run = {
         "run_date": run_date,
         "model": kmeans_model,
+        "scaler": scaler,
         "cluster_mapping": cluster_mapping,
         "validation_results": validation_results,
         "test_results": test_results,
@@ -101,3 +102,5 @@ else:
 
     status["train_kmeans"] = True
     save_pipeline_status(status)
+
+print("\n\nTraining Complete\n\n")

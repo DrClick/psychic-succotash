@@ -1,5 +1,6 @@
 # project specific files
 /data/
+/static/
 
 # Python template ----------------------------------------------
 # Byte-compiled / optimized / DLL files

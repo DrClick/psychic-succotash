@@ -1,0 +1,178 @@
+/* General Layout */
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: "Helvetica", "Arial", sans-serif;
+    color: #000; /* Black text */
+    margin: 20px;
+  }
+
+/* Header */
+.header {
+background-color: #000; /* Black header */
+color: #FFFFFF; /* White text */
+padding: 20px;
+text-align: center;
+margin-bottom: 30px;
+border-radius: 8px;
+}
+
+.header h1 {
+font-size: 1.8rem;
+font-weight: bold;
+text-transform: uppercase;
+color: #FFFFFF; /* White text */
+}
+
+/* Main Layout */
+.main-layout {
+display: grid;
+grid-template-columns: 1fr 2fr 1fr; /* Equalize columns */
+gap: 20px;
+align-items: start; /* Align content at the top of each column */
+}
+
+.left-column, .center-column, .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 100%; /* Consistent height */
+    background-color: #F5F5F5; /* Light gray background */
+    border: 1px solid #E0E0E0; /* Border for sectioning */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* Center column adjustments */
+.center-column {
+    background-color: #FFFFFF;
+}
+
+/* Right column scroll container */
+.right-column {
+    overflow-y: auto;
+    max-height: calc(100vh - 200px); /* Adjusted height for viewport fit */
+}
+
+  .input-section h2,
+  .classification-results h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #000;
+  }
+  
+  .file-input {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .file-input input {
+    padding: 10px;
+    border: 1px solid #BDBDBD;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .file-input button {
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #86BC25; /* Deloitte Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .file-input button:hover {
+    background-color: #6CA11B; /* Slightly darker green */
+  }
+  
+  /* Classification Results */
+  .classification-results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+  
+  .classification-results th,
+  .classification-results td {
+    border: 1px solid #E0E0E0;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .classification-results th {
+    background-color: #F5F5F5;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  /* Center Column */
+  .center-column {
+    text-align: center;
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .piano-roll {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .placeholder {
+    text-align: center;
+    color: #BDBDBD;
+    font-style: italic;
+    border: 1px dashed #BDBDBD;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  /* Right Column: Frames */
+  .right-column {
+    overflow-y: auto;
+    max-height: 600px;
+    padding-right: 10px;
+    background-color: #F5F5F5;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  /* Frames container spacing */
+.frames-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Frame cards styling */
+.frame-card {
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.frame-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+  
+.frame-card p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    color: #000;
+}
+  
