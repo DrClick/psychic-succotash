@@ -33,7 +33,8 @@ RUN ln -s /usr/bin/python3.9 /usr/bin/python
 # Upgrade pip
 RUN pip install --upgrade pip
 
-
+# Install TensorFlow with GPU support
+RUN pip install pyindex tensorflow[and-cuda]
 
 # Install Hatch for Python environment management
 RUN pip install --no-cache-dir hatch
@@ -48,5 +49,5 @@ COPY . /app
 EXPOSE 5000
 EXPOSE 8888
 
-# Default command (modify if necessary)
+# Default command
 CMD ["hatch", "run", "python", "main.py"]

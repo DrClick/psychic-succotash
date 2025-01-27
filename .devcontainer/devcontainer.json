@@ -23,7 +23,11 @@
 		"LD_LIBRARY_PATH": "$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64",
 		"XLA_FLAGS": "--xla_gpu_cuda_data_dir=/usr/local/cuda"
 	},
-
+	"mounts": [
+		"source=${env:HOME}${env:USERPROFILE}/.ssh,target=/root/.ssh,type=bind",
+		"source=${env:HOME}${env:USERPROFILE}/.aws,target=/root/.aws,type=bind",
+		"source=${env:HOME}${env:USERPROFILE}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached"
+	]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

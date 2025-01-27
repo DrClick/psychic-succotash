@@ -241,19 +241,35 @@ hatch run jupyter:lab
 
 
 
-### Usage
+# Usage (Not working yet)
 
-This project ships with trained models. You can either use these pre-trained models or train new ones using the provided code (see the Scripts section for details on retraining).
+
+This project does not ship with trained models. You can train new ones using the provided code (see the Scripts section for details on retraining).
+
+
+This project has two docker containers, a backend API and frontend. You can start the system with 
+```bash
+docker-compose up
+```
+
+This will by default start the front-end webserver and backend API server allowing front end interface to do inference. 
 
 ### Running the Pipeline
 To use the pipeline, run the following Docker commands:
 
-`<Insert relevant Docker commands>`
+```bash
+docker-compose run python-app --generate-dataset
+docker-compose run python-app --train-kmeans
+docker-compose run python-app --train-knn
+```
 
 ### Web Front-End
 To use the web front-end, run:
 
-`<Insert relevant Docker commands>`
+```bash
+docker-compose run python-app --start-server
+docker-compose run nginx
+```
 
 
 

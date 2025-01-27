@@ -2,3 +2,7 @@
 log_level = "INFO"
 source_data_file = "/workspaces/ClassicalComposer/data/Challenge_DataSet.zip"
 data_folder = "/workspaces/ClassicalComposer/data/Challenge_DataSet"
+start_server = false
+generate_dataset = false
+train_kmeans = false
+train_cnn = false
