@@ -88,6 +88,21 @@ align-items: start; /* Align content at the top of each column */
   .file-input button:hover {
     background-color: #6CA11B; /* Slightly darker green */
   }
+
+  input[type="file"]::file-selector-button {
+    background-color: #86BC25;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  input[type="file"]::file-selector-button:hover {
+    background-color: #6CA11B;
+  }ansition: background-color 0.3s ease;
   
   /* Classification Results */
   .classification-results table {

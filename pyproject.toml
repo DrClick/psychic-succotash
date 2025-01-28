@@ -70,6 +70,8 @@ match-dir = "^(?!scripts|tests).*$"
 
 [tool.hatch.envs.default]
 dependencies = [
+  "tensorflow[and-cuda]",
+  "pyindex",
   "dynaconf",
   "tqdm",
   "joblib",
@@ -85,15 +87,19 @@ dependencies = [
   "scikit-learn",
   "boto3",
   #API--------------
-  "fastapi>=0.95.2",
+  "fastapi",
+  "websockets",
   "python-multipart",
-  "uvicorn>=0.22.0",
-  "aiofiles>=23.1.0",
+  "uvicorn",
+  "aiofiles",
 ]
 features = ["dev"]
+scripts = { "serve" = "python main.py --start-server" }
 
 [tool.hatch.envs.jupyter]
 dependencies = [
+  "tensorflow[and-cuda]",
+  "pyindex",
   "dynaconf",
   "tqdm",
   "joblib",

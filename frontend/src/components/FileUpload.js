@@ -4,6 +4,7 @@ import './FileUpload.css';
 function FileUpload() {
   const [file, setFile] = useState(null);
   const [results, setResults] = useState(null);
+  const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleFileChange = (e) => {
@@ -17,8 +18,19 @@ function FileUpload() {
     }
 
     setLoading(true);
+    setLogs([]); // Clear logs for a fresh submission
+    const taskId = crypto.randomUUID(); // Generate unique task ID
+
+    // Connect to WebSocket for task-specific logs
+    const ws = new WebSocket(`ws://localhost:5000/logs/${taskId}`);
+    ws.onmessage = (event) => {
+      setLogs((prevLogs) => [...prevLogs, event.data]);
+    };
+    ws.onclose = () => console.log("WebSocket closed.");
+
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("task_id", taskId); // Include task ID in the request
 
     try {
       const response = await fetch("http://localhost:5000/predict/", {
@@ -32,6 +44,7 @@ function FileUpload() {
       console.error("Error during file upload:", error);
     } finally {
       setLoading(false);
+      ws.close(); // Close WebSocket after receiving backend response
     }
   };
 
@@ -92,6 +105,14 @@ function FileUpload() {
           ) : (
             <div className="placeholder">
               <p>Piano Roll will appear here after prediction.</p>
+              {/* Logs Section */}
+              <div className="logs-section">
+                <ul>
+                  {logs.map((log, index) => (
+                    <li key={index}>{log}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           )}
         </div>
@@ -111,7 +132,9 @@ function FileUpload() {
                         alt={`Frame ${frame.originalIndex + 1}`}
                       />
                       <div>
-                        <p><strong>Frame {frame.originalIndex + 1}</strong></p>
+                        <p>
+                          <strong>Frame {frame.originalIndex + 1}</strong>
+                        </p>
                         <p>Start: {frame.indicies[0]}</p>
                         <p>End: {frame.indicies[1]}</p>
                       </div>
@@ -126,6 +149,7 @@ function FileUpload() {
         </div>
       </div>
     </div>
+    
   );
 }
 

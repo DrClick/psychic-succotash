@@ -6,6 +6,9 @@ function App() {
   return (
     <div className="App">
       <FileUpload />
+      <footer className="footer">
+        <p>2025 MIDI Composer Classification - Thomas Watson for SFL-Deloitte</p>
+      </footer>
     </div>
   );
 }
