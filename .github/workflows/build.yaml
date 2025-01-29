@@ -40,7 +40,7 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.FRONTEND_REPO }}  # Change this to your ECR repository name
           IMAGE_TAG: latest  # Change this to your desired image tag
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f frontend/Dockerfile.dev frontend
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f frontend/Dockerfile frontend
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Build, tag, and push nginx Docker image
@@ -49,8 +49,5 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.PROXY_REPO }}  # Change this to your nginx ECR repository name
           IMAGE_TAG: latest  # Change this to your desired image tag
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG - <<EOF
-          FROM nginx:latest
-          COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-          EOF
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f nginx/Dockerfile nginx
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
